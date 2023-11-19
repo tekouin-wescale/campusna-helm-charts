@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moodle
+  namespace: moodle-elife
+  labels:
+    name: moodle-elife
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: moodle-elife
+  template:
+    metadata:
+      labels:
+        name: moodle-elife
+    spec:
+      containers:
+        - name: moodle
+          image: docker.io/bitnami/moodle:4.2.1-debian-11-r0
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: https
+              containerPort: 8443
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: elifeconfig
+            - secretRef:
+                name: elifesecret
+
+          volumeMounts:
+            - mountPath: /bitnami/moodle
+              name: moodle-data
+            - mountPath: /bitnami/moodledata
+              name: moodle-data
+      volumes:
+        - name: moodle-data
+          persistentVolumeClaim:
+            claimName: moodle-data

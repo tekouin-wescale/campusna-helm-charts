@@ -1,0 +1,28 @@
+# my-helm-chart/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  labels:
+    {{- toYaml .Values.labels | nindent 4 }}
+data:
+  ALIAS_PREFIX: {{ .Values.configMap.aliasPrefix | toString }}
+  AWS_DEFAULT_OUTPUT: {{ .Values.configMap.awsDefaultOutput | toString }}
+  AWS_DEFAULT_PROFILE: {{ .Values.configMap.awsDefaultProfile | toString }}
+  AWS_DEFAULT_REGION: {{ .Values.configMap.awsDefaultRegion | toString }}
+  AWS_OUTPUT: {{ .Values.configMap.awsOutput | toString }}
+  AWS_PROFILE: {{ .Values.configMap.awsProfile | toString }}
+  AWS_REGION: {{ .Values.configMap.awsRegion | toString }}
+  AWS_SDK_LOAD_CONFIG: "1"
+  AWS_SDK_LOAD_CONFIG_OPTIONS: {{ .Values.configMap.awsSdkLoadConfigOptions | toString }}
+  FILE_FOR_RESOURCES_TYPES: {{ .Values.configMap.fileForResourcesTypes | toString }}
+  GITHUB_WORKFLOW: {{ .Values.configMap.githubWorkflow | toString }}
+  MOODLE_BASE_URL: {{ .Values.configMap.moodleBaseUrl | toString }}
+  MYSQL_DATABASE: {{ .Values.configMap.mysqlDatabase | toString }}
+  MYSQL_MOODLE_DATABASE: {{ .Values.configMap.mysqlMoodleDatabase | toString }}
+  MYSQL_TEACHER_DATABASE: {{ .Values.configMap.mysqlTeacherDatabase | toString }}
+  NUKE_CONFIG_FILE_DIRECTORY: {{ .Values.configMap.nukeConfigFileDirectory | toString }}
+  NUKE_ERROR_FILE_DIRECTORY: {{ .Values.configMap.nukeErrorFileDirectory | toString }}
+  NUKE_OUTPUT_FILE_DIRECTORY: {{ .Values.configMap.nukeOutputFileDirectory | toString }}
+  SENTRY_SUPPORT: {{ .Values.configMap.sentrySupport | toString }}
+  TEACHER_BASE_URL: {{ .Values.configMap.teacherBaseUrl | toString }}

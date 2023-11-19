@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: jupyter
+    meta.helm.sh/release-namespace: jupyterhub
+  creationTimestamp: "2023-11-18T15:47:46Z"
+  finalizers:
+    - service.k8s.aws/resources
+  labels:
+    app: jupyterhub
+    app.kubernetes.io/managed-by: Helm
+    chart: jupyterhub-3.1.0
+    component: proxy-public
+    heritage: Helm
+    release: jupyter
+  name: proxy-public
+  namespace: jupyterhub
+  resourceVersion: "49797824"
+  uid: 0e12f0ee-b251-4184-8cda-2f1fff361e61
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.100.170.1
+  clusterIPs:
+    - 10.100.170.1
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  loadBalancerClass: service.k8s.aws/alb
+  ports:
+    - name: http
+      nodePort: 31979
+      port: 80
+      protocol: TCP
+      targetPort: http
+  selector:
+    app: jupyterhub
+    component: proxy
+    release: jupyter
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+      - hostname: k8s-jupyterh-proxypub-5dc0370308-ea4257163c7127d5.elb.eu-west-3.amazonaws.com

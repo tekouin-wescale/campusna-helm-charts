@@ -1,0 +1,42 @@
+# my-helm-chart/templates/autoscaling.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name:   {{ .Release.Name }}-hpa
+  labels:
+    {{- toYaml .Values.labels | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name:   {{ .Release.Name }}-deployment
+  minReplicas: {{ .Values.autoscaling.hpa.minReplicas }}
+  maxReplicas: {{ .Values.autoscaling.hpa.maxReplicas }}
+  metrics:
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.hpa.memoryUtilization }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.hpa.cpuUtilization }}
+
+---
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name:   {{ .Release.Name }}-vpa
+  labels:
+    {{- toYaml .Values.labels | nindent 4 }}
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: "Deployment"
+    name:  {{ .Release.Name }}-deployment
+  updatePolicy:
+    updateMode: {{ .Values.autoscaling.vpa.updateMode }}

@@ -1,0 +1,28 @@
+# PersistentVolume (PV) definition
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jupyterhub-shared-pv
+spec:
+  capacity:
+    storage: 5Gi # Adjust the storage capacity as needed
+  accessModes:
+    - ReadWriteMany # Adjust the access mode as needed
+  persistentVolumeReclaimPolicy: Retain # Adjust the reclaim policy as needed
+  storageClassName: gp2 # Adjust the storage class as needed
+  hostPath:
+    path: /home/shared/
+
+---
+# PersistentVolumeClaim (PVC) definition
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jupyterhub-shared-volume
+spec:
+  accessModes:
+    - ReadWriteMany # Should match the access mode of the PV
+  resources:
+    requests:
+      storage: 5Gi # Should match the storage capacity of the PV
+  storageClassName: gp2 # Should match the storage class of the PV

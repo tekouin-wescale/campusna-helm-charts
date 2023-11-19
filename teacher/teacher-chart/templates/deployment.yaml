@@ -1,0 +1,55 @@
+# my-helm-chart/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  {{ .Release.Name }}-deployment
+  labels:
+    {{- toYaml .Values.labels | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+        {{- toYaml .Values.labels | nindent 6 }}
+
+  template:
+    metadata:
+      name: {{ .Release.Name}}
+      labels:
+    {{- toYaml .Values.labels | nindent 8 }}
+
+    spec:
+      containers:
+        - image: {{ .Values.deployment.container.image }}:{{ .Values.deployment.container.tag }}
+          name:  teacher-api
+          imagePullPolicy: {{ .Values.deployment.container.imagePullPolicy }}
+          ports:
+            - name: api-port
+              containerPort: 8000
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name:  {{ .Release.Name }}-config
+            - secretRef:
+                name:  {{ .Release.Name }}-secret
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
+          resources:
+            requests:
+              memory: {{ .Values.deployment.resources.requests.memory }}
+              cpu: {{ .Values.deployment.resources.requests.cpu }}
+            limits:
+              memory: {{ .Values.deployment.resources.limits.memory }}
+              cpu: {{ .Values.deployment.resources.limits.cpu }}
+      priorityClassName: {{ .Values.deployment.priorityClassName }}
+      imagePullSecrets:
+        - name: {{ .Values.deployment.imagePullSecrets.name }}

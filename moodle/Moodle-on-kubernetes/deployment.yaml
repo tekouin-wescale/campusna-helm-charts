@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: moodle
+  namespace: moodle-elife
+  labels:
+    app: moodle
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+    - name: https
+      port: 443
+      targetPort: 443
+  selector:
+    app: moodle
+    tier: frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moodle
+  namespace: moodle-elife
+  labels:
+    app: moodle
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moodle
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: moodle
+        tier: frontend
+    spec:
+      containers:
+        - image: jhardison/moodle
+          name: moodle
+          env:
+            - name: DB_PORT_3306_TCP_ADDR
+              value: tekouin-main.csasqowzzfpj.eu-west-3.rds.amazonaws.com
+            - name: DB_ENV_MYSQL_PASSWORD
+              value: Zh72D05mH%&I
+            - name: DB_ENV_MYSQL_USER
+              value: moodle_dauphine_user
+            - name: DB_ENV_MYSQL_DATABASE
+              value: dauphine_updated
+            - name: MOODLE_URL
+              value: http://elife.tekouin.com
+            - name: SSL_PROXY
+              value: "false"
+          ports:
+            - containerPort: 80
+              name: http
+            - containerPort: 443
+              name: https
+          volumeMounts:
+            - name: moodle-persistent-storage
+              mountPath: /var/moodledata
+      volumes:
+        - name: moodle-persistent-storage
+          persistentVolumeClaim:
+            claimName: moodle-pv-claim

@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: elifeconfig
+  namespace: moodle-elife
+  labels:
+    name: elifeconfig
+data:
+  BITNAMI_DEBUG: "true"
+  ALLOW_EMPTY_PASSWORD: "false"
+  APACHE_HTTP_PORT_NUMBER: "8080"
+  APACHE_HTTPS_PORT_NUMBER: "8443"
+  MOODLE_DATABASE_TYPE: mysqli
+  MOODLE_DATABASE_HOST: tekouin-main.csasqowzzfpj.eu-west-3.rds.amazonaws.com
+  MOODLE_DATABASE_PORT_NUMBER: "3306"
+  MOODLE_DATABASE_NAME: moodle_elife
+  MOODLE_DATABASE_USER: moodle_elife_user
+  MOODLE_SKIP_BOOTSTRAP: "false"
+  MOODLE_USERNAME: admin
+  MOODLE_SITE_NAME: Elife
+  MOODLE_LANG: en
+  MOODLE_EMAIL: noreply@tekouin.com
+  SMTP_HOST: ex4.mail.ovh.net
+  SMTP_PORT: "587"
+  SMTP_USER: noreply@tekouin.com
+  MOODLE_DATABASE_PASSWORD: moodle_elife_user
+  MOODLE_REVERSEPROXY: "false"
+  MOODLE_SSLPROXY: "false"

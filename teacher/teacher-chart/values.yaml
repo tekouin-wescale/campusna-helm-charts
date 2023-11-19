@@ -1,0 +1,106 @@
+AppName: teacher
+# my-helm-chart/values.yaml
+
+resourceQuota:
+  name: teacher-resources
+  pods: "5"
+  requestsCpu: "4"
+  requestsMemory: 2Gi
+  limitsCpu: "2"
+  limitsMemory: 4Gi
+
+ingress:
+  enabled: false
+  loadBalancerName: api.teacher
+  ingressClassName: "alb"
+  host: api.teacher.tekouin.com
+  backendServiceName: teacher-service-prod
+  backendServicePort: 80
+  certificateArn: "your-certificate-arn-here"
+
+configMap:
+  aliasPrefix: santanderNuke
+  awsDefaultOutput: json
+  awsDefaultProfile: default
+  awsDefaultRegion: eu-west-3
+  awsOutput: json
+  awsProfile: default
+  awsRegion: eu-west-3
+  awsSdkLoadConfigOptions: profile=default
+  fileForResourcesTypes: students/aws/resource_types.json
+  githubWorkflow: ""
+  moodleBaseUrl: techschool.es
+  mysqlDatabase: moodle_santander
+  mysqlMoodleDatabase: moodle_santander
+  mysqlTeacherDatabase: teacher_santander
+  nukeConfigFileDirectory: ./config_nuke/
+  nukeErrorFileDirectory: ./error_nuke/
+  nukeOutputFileDirectory: ./nuke_report/
+  sentrySupport: "true"
+  teacherBaseUrl: teacher.techschool.es
+service:
+  type: NodePort
+
+autoscaling:
+  hpa:
+    minReplicas: 1
+    maxReplicas: 4
+    memoryUtilization: 80
+    cpuUtilization: 80
+
+  vpa:
+    updateMode: "Auto"
+
+deployment:
+  name: teacher-api
+  tier: backend
+  release: stable
+  environment: production
+  appName: teacher-api
+  appVersion: "2.0"
+  replicas: 1
+  container:
+    image: campusnaa/teacherapi
+    tag: latest
+    imagePullPolicy: Always
+  readinessProbe:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+  livenessProbe:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  priorityClassName: high-priority
+  imagePullSecrets:
+    name: regcred
+
+secret:
+  mysqlPassword: "your-mysql-password"
+  awsSecretAccessKey: "your-aws-secret-access-key"
+  awsAccessKeyId: "your-aws-access-key-id"
+  mysqlUser: "your-mysql-user"
+  mysqlHost: "your-mysql-host"
+  awsMasterAccountId: "your-aws-master-account-id"
+labels:
+  tier: backend
+  release: stable
+  environment: prod
+  app.kubernetes.io/name: teacher
+  app.kubernetes.io/version: "2.0"
+  app.kubernetes.io/managed-by: "helm"
+  app.kubernetes.io/component: "Backend"
+
+labelsSelector:
+  tier: backend
+  release: stable
+  environment: prod
+  app.kubernetes.io/name: teacher
+  app.kubernetes.io/version: "2.0"
+  app.kubernetes.io/managed-by: "helm"
+  app.kubernetes.io/component: "Backend"
