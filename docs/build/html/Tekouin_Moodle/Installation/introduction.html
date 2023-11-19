@@ -5,15 +5,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Tekouin Moodle Installation &#8212; tekouin 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <title>Tekouin Moodle Installation &#8212; Tekouin Platform 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="Adminestating.html" />
+    <link rel="next" title="Moodle Administrator" href="Administrating.html" />
     <link rel="prev" title="Welcome to Tekouin Platform Documentation!" href="../../index.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -33,43 +34,270 @@
             
   <section id="tekouin-moodle-installation">
 <h1>Tekouin Moodle Installation<a class="headerlink" href="#tekouin-moodle-installation" title="Link to this heading">¶</a></h1>
-<p>This guide will walk you through the steps to install Big Blue Button.</p>
-<section id="prerequisites">
-<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Link to this heading">¶</a></h2>
-<p>Before you begin, ensure you have the following prerequisites:</p>
+<p>This page explains how to install Moodle. If you are an expert and/or in a hurry, try Installation Quickstart.</p>
+<p>If you just want to try Moodle on a standalone machine, there are ‘one-click’ installers for Windows (see Complete install packages for Windows) and for OSX (see Complete Install Packages for Mac OS X) or install on OS X. These are unsuitable for production servers.</p>
+<p>If you want to avoid installing Moodle yourself completely, consider <a class="reference external" href="https://moodle.com/moodlecloud/">MoodleCloud</a>.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<p>Moodle is primarily developed in Linux using Apache, PostgreSQL/MySQL/MariaDB, and PHP (sometimes known as the LAMP platform). Typically, this is also how Moodle is run, although there are other options (Nginx/OpenLiteSpeed) as long as the software requirements of the release are met.</p>
+<p>If you are installing Moodle on a Windows server, note that from php5.5 onwards, you will also need to have the Visual C++ Redistributable for Visual Studio 2012 installed from: <a class="reference external" href="http://www.microsoft.com/en-us/download/details.aspx?id=30679">Visual C++</a> (x86 or x64).</p>
+<p>The basic requirements for Moodle are as follows:</p>
+<p><strong>Hardware</strong>
+- Disk space: 200MB for the Moodle code, plus as much as you need to store content. 5GB is probably a realistic minimum.
+- Processor: 1 GHz (min), 2 GHz dual core or more recommended.
+- Memory: 512MB (min), 1GB or more is recommended. 8GB plus is likely on a large production server.
+- Consider separate servers for the web “front ends” and the database. It is much easier to “tune.”
+- All the above requirements will vary depending on specific hardware and software combinations as well as the type of use and load; busy sites may well require additional resources. Further guidance can be found under performance recommendations. Moodle scales easily by increasing hardware.</p>
+<p>For very large sites, you are much better starting with a small pilot and gaining some experience and insight. A “what hardware do I need for 50,000 users?” style post in the forums is highly unlikely to get a useful answer.</p>
+<p><strong>Software</strong>
+- See the release notes in the dev docs for software requirements.</p>
+</section>
+<section id="set-up-your-server">
+<h2>Set up your server<a class="headerlink" href="#set-up-your-server" title="Link to this heading">¶</a></h2>
+<p>Depending on the use case, a Moodle server may be anything from a Desktop PC (e.g., for testing and evaluating) to a rack-mounted or clustered solution to cloud VMs or other hosted solutions. As mentioned above, there are lots of possibilities for installing the basic server software, for details see:</p>
 <ul class="simple">
-<li></li>
-<li></li>
-<li><p>…</p></li>
+<li><p>Installing AMP</p></li>
+<li><p>IIS</p></li>
+<li><p>Nginx</p></li>
+<li><p>Apache</p></li>
+<li><p>OpenLiteSpeed</p></li>
 </ul>
-<p>…</p>
+<p>It will help hugely, regardless of your deployment choices, if time is taken to understand how to configure the different parts of your software stack (HTTP daemon, database, PHP, etc.). Do not expect the standard server configuration to be optimal for Moodle. For example, the web server and database servers will almost certainly require tuning to get the best out of Moodle.</p>
+<p>If you’re unsure which packages to use (e.g., MariaDB vs. MySQL), then have a look at what the consensus on the internet is, but also have a look at the Performance recommendations page, as this may also help give you an idea of exactly how much work is involved/what your workflow may end up looking like and planning that aspect as well.</p>
+<p>If a hosting provider is being used, ensure that all Moodle requirements (such as PHP version) are met by the hosting platform before attempting the installation. It will help to become familiar with changing settings within the hosting provider’s platform (e.g., PHP file upload maximums) as the options and tools provided vary.</p>
 </section>
-<section id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
-<section id="ovh-or-ec2">
-<h3>OVH or EC2<a class="headerlink" href="#ovh-or-ec2" title="Link to this heading">¶</a></h3>
+<section id="download-and-copy-files-into-place">
+<h2>Download and copy files into place<a class="headerlink" href="#download-and-copy-files-into-place" title="Link to this heading">¶</a></h2>
+<p><strong>IMPORTANT:</strong> While there are now a number of places you can get the Moodle code (including host provided Moodle installers), you are strongly advised to only obtain Moodle from <a class="reference external" href="http://moodle.org">moodle.org</a>. If you run into problems, it will be a great deal easier to support you.</p>
+<p>You have two options:</p>
+<ol class="arabic">
+<li><dl class="simple">
+<dt>Download your required version from <a class="reference external" href="http://moodle.org/downloads">http://moodle.org/downloads</a> and unzip/unpack…</dt><dd><p>OR</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>Pull the code from the Git repository (recommended for developers and also makes upgrading very simple):</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone -b MOODLE_{{Version3}}_STABLE git://git.moodle.org/moodle.git
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ol>
+<p>For a fuller discussion see <a class="reference external" href="https://docs.moodle.org/dev/Git_for_Administrators">Git for Administrators</a>.</p>
+<p>Either of the above should result in a directory called moodle, containing a number of files and folders.</p>
+<p>You can typically place the whole folder in your web server documents directory, in which case the site will be located at <a class="reference external" href="http://yourwebserver.com/moodle">http://yourwebserver.com/moodle</a>, or you can copy all the contents straight into the main web server documents directory, in which case the site will be simply <a class="reference external" href="http://yourwebserver.com">http://yourwebserver.com</a>. See the documentation for your system and/or web server if you are unsure.</p>
+<p><strong>Tip:</strong> If you are downloading Moodle to your local computer and then uploading it to your hosted website, it is usually better to upload the compressed Moodle file and then decompress on your hosted website. If you decompress Moodle on your local computer, because Moodle is comprised of over 25,000 files, trying to upload over 25,000 files using an FTP client or your host’s “file manager” can sometimes miss a file and cause errors.</p>
+<dl>
+<dt><strong>Secure the Moodle files:</strong> It is vital that the files are not writable by the web server user. For example, on Unix/Linux (as root):</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">root</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">moodle</span>
+<span class="n">chmod</span> <span class="o">-</span><span class="n">R</span> <span class="mi">0755</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">moodle</span>
+<span class="p">(</span><span class="n">files</span> <span class="n">are</span> <span class="n">owned</span> <span class="n">by</span> <span class="n">the</span> <span class="n">administrator</span><span class="o">/</span><span class="n">superuser</span> <span class="ow">and</span> <span class="n">are</span> <span class="n">only</span> <span class="n">writable</span> <span class="n">by</span> <span class="n">them</span> <span class="o">-</span> <span class="n">readable</span> <span class="n">by</span> <span class="n">everyone</span> <span class="k">else</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>On test/dev sites, you may want to make the files writable to use the built-in plugin installer. This is discouraged for live sites (at least, revert to more secure settings if you do).</p>
+<p>This link about <a class="reference external" href="https://docs.moodle.org/311/en/Installation_FAQ#The_right_folder_permissions_for_a_website_on_a_Linux_server">setting folder permissions on Linux Webservers</a> may assist as well.</p>
 </section>
-<section id="aws-eks">
-<h3>AWS EKS<a class="headerlink" href="#aws-eks" title="Link to this heading">¶</a></h3>
+<section id="create-an-empty-database">
+<h2>Create an empty database<a class="headerlink" href="#create-an-empty-database" title="Link to this heading">¶</a></h2>
+<p>Next, create a new, empty database for your installation. You need to find and make a note of the following information for use during the final installation stage:</p>
+<ul class="simple">
+<li><p>dbhost - the database server hostname. Probably localhost if the database and web server are the same machine, otherwise the name of the database server.</p></li>
+<li><p>dbname - the database name. Whatever you called it, e.g., moodle.</p></li>
+<li><p>dbuser - the username for the database. Whatever you assigned, e.g., moodleuser - do not use the root/superuser account. Create a proper account with the minimum permissions needed.</p></li>
+<li><p>dbpass - the password for the above user.</p></li>
+</ul>
+<p>If your site is hosted, you should find a web-based administration page for databases as part of the control panel (or ask your administrator). For everyone else or for detailed instructions, see the page for your chosen database server:</p>
+<ul class="simple">
+<li><p>PostgreSQL</p></li>
+<li><p>MariaDB</p></li>
+<li><p>MySQL</p></li>
+<li><p>MSSQL</p></li>
+<li><p>Oracle (not recommended)</p></li>
+</ul>
+</section>
+<section id="create-the-moodledata-data-directory">
+<h2>Create the (moodledata) data directory<a class="headerlink" href="#create-the-moodledata-data-directory" title="Link to this heading">¶</a></h2>
+<p>Moodle requires a directory to store all of its files (all your site’s uploaded files, temporary data, cache, session data, etc.). The web server needs to be able to write to this directory. On larger systems, consider how much free space you are going to use when allocating this directory.</p>
+<p>Due to the default way Moodle caches data, you may have serious performance issues if you use relatively slow storage (e.g., NFS) for this directory. Read the Performance recommendations carefully and consider using (e.g.) redis or memcached for Caching.</p>
+<p><strong>IMPORTANT:</strong> This directory must NOT be accessible directly via the web. This would be a serious security hole. Do not try to place it inside your web root or inside your Moodle program files directory. Moodle will not install. It can go anywhere else convenient.</p>
+<dl>
+<dt>Here is an example (Unix/Linux) of creating the directory and setting the permissions for anyone on the server to write here. This is only appropriate for Moodle servers that are not shared. Discuss this with your server administrator for better permissions that just allow the web server user to access these files.</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mkdir /path/to/moodledata</span>
+<span class="c1"># chmod 0777 /path/to/moodledata</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<section id="securing-moodledata-in-a-web-directory">
+<h3>Securing moodledata in a web directory<a class="headerlink" href="#securing-moodledata-in-a-web-directory" title="Link to this heading">¶</a></h3>
+<p>If you are using a hosted site and you have no option but to place ‘moodledata’ in a web-accessible directory. You may be able to secure it by creating an .htaccess file in the ‘moodledata’ directory. This does not work on all systems - see your host/administrator. Create a file called .htaccess containing only the following lines:</p>
+<dl>
+<dt><strong>Apache 2.2</strong></dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">order</span> <span class="n">deny</span><span class="p">,</span><span class="n">allow</span>
+<span class="n">deny</span> <span class="kn">from</span> <span class="nn">all</span>
+</pre></div>
+</div>
+</dd>
+<dt><strong>Apache 2.4</strong></dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Require</span> <span class="nb">all</span> <span class="n">denied</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 </section>
 </section>
-<section id="configuration">
-<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h2>
-<section id="dns-networks">
-<h3>DNS &amp; Networks<a class="headerlink" href="#dns-networks" title="Link to this heading">¶</a></h3>
+<section id="start-moodle-install">
+<h2>Start Moodle install<a class="headerlink" href="#start-moodle-install" title="Link to this heading">¶</a></h2>
+<p>It’s now time to run the installer to create the database tables and configure your new site. The recommended method is to use the command line installer. If you cannot do this for any reason (e.g., on a Windows server), the web-based installer is still available.</p>
+<p><strong>Command line installer</strong></p>
+<p>It’s best to run the command line as your system’s web user. You need to know what that is - see your system’s documentation (e.g., Ubuntu/Debian is ‘www-data’, Centos is ‘apache’)</p>
+<dl>
+<dt>Example of using the command-line (as root - substitute ‘www-data’ for your web user):</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># chown root /path/to/moodle</span>
+<span class="c1"># cd /path/to/moodle/admin/cli</span>
+<span class="c1"># sudo -u www-data /usr/bin/php install.php</span>
+<span class="c1"># chown -R root /path/to/moodle</span>
+</pre></div>
+</div>
+</dd>
+<dt>The chowns allow the script to write a new config.php file. More information about the options can be found using</dt><dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># php install.php --help</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>You will be asked for other settings that have not been discussed on this page - if unsure just accept the defaults. For a full discussion see <a class="reference external" href="https://docs.moodle.org/311/en/Installation_FAQ#Administration_via_command_line">Administration via command line</a>.</p>
+<p><strong>Web based installer</strong></p>
+<p>For ease of use, you can install Moodle via the web. We recommend configuring your web server so that the page is not publicly accessible until the installation is complete.</p>
+<p>To run the web installer script, just go to your Moodle’s main URL using a web browser.</p>
+<p>The installation process will take you through a number of pages. You should be asked to confirm the copyright, see the database tables being created, supply administrator account details, and supply the site details. The database creation can take some time - please be patient. You should eventually end up at the Moodle front page with an invitation to create a new course.</p>
+<p>It is very likely that you will be asked to download the new config.php file and upload it to your Moodle installation - just follow the on-screen instructions.</p>
 </section>
-<section id="storage-volumes">
-<h3>Storage &amp; Volumes<a class="headerlink" href="#storage-volumes" title="Link to this heading">¶</a></h3>
+<section id="final-configuration">
+<h2>Final configuration<a class="headerlink" href="#final-configuration" title="Link to this heading">¶</a></h2>
+<p><strong>Settings within Moodle</strong></p>
+<p>There are a number of options within the Moodle Site Administration screens (accessible from the ‘Site administration’ tab in the ‘Administration’ block (Classic theme) or the Site administration button in the navigation bar (Boost). Here are a few of the more important ones that you will probably want to check:</p>
+<ul>
+<li><p>Administration &gt; Site administration &gt; Server &gt; Email &gt; Outgoing mail configuration: Set your SMTP server and authentication if required (so your Moodle site can send emails). You can also set a noreply email on this page.</p></li>
+<li><p>Administration &gt; Site administration &gt; Server &gt; Server &gt; Support contact. Set your support contact email.</p></li>
+<li><p>Administration &gt; Site administration &gt; Server &gt; System paths: Set the paths to du, dot, and aspell binaries.</p></li>
+<li><p>Administration &gt; Site administration &gt; Server &gt; HTTP: If you are behind a firewall you may need to set your proxy credentials in the ‘Web proxy’ section.</p></li>
+<li><p>Administration &gt; Site administration &gt; Location &gt; Update timezones: Run this to make sure your timezone information is up to date. (more info <a class="reference external" href="https://docs.moodle.org/311/en/Location">Location</a>)</p></li>
+<li><p>Set server’s local timezone inside php.ini (should probably be inside /etc/php.ini or /etc/php.d/date.ini, depending on the underlying OS):
+.. code-block:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Date</span><span class="p">]</span>
+<span class="p">;</span> <span class="n">Defines</span> <span class="n">the</span> <span class="n">default</span> <span class="n">timezone</span> <span class="n">used</span> <span class="n">by</span> <span class="n">the</span> <span class="n">date</span> <span class="n">functions</span>
+<span class="n">date</span><span class="o">.</span><span class="n">timezone</span> <span class="o">=</span> <span class="s2">&quot;YOUR LOCAL TIMEZONE&quot;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>Remaining tasks</strong></p>
+<ul class="simple">
+<li><p>Configure Cron: Moodle’s background tasks (e.g., sending out forum emails and performing course backups) are performed by a script which you can set to execute at specific times of the day. This is known as a cron script. Please refer to the <a class="reference external" href="https://docs.moodle.org/311/en/Cron">Cron instructions</a>.</p></li>
+<li><p>Set up backups: See <a class="reference external" href="https://docs.moodle.org/311/en/Site_backup_and_Automated_course_backup">Site backup and Automated course backup</a>.</p></li>
+<li><p>Secure your Moodle site: Read the <a class="reference external" href="https://docs.moodle.org/311/en/Security_recommendations">Security recommendations</a>. Also, have a look at the <a class="reference external" href="https://docs.moodle.org/311/en/Security_checks">Security Checks Section under Site Administration -&gt; Reports -&gt; Security Checks</a>.</p></li>
+<li><p>Increasing the maximum upload size: See <a class="reference external" href="https://docs.moodle.org/311/en/Installation_FAQ#Maximum_upload_file_size_-_how_to_change_it.3F">Installation FAQ Maximum upload file size - how to change it?</a>.</p></li>
+<li><p>Check mail works: From Site administration &gt; Server &gt; Test outgoing mail configuration, use the link to send yourself a test email. Don’t be tempted to skip this step.</p></li>
+</ul>
+<p><strong>Installation is complete :)</strong></p>
+<ul class="simple">
+<li><p>Create a new course: You can now access Moodle through your web browser (</p></li>
+</ul>
 </section>
-<section id="php-extension">
-<h3>PHP &amp; Extension<a class="headerlink" href="#php-extension" title="Link to this heading">¶</a></h3>
 </section>
-<section id="plugins">
-<h3>Plugins<a class="headerlink" href="#plugins" title="Link to this heading">¶</a></h3>
+<section id="moodle-kubernetes-operations-documentation">
+<h1>Moodle Kubernetes Operations Documentation<a class="headerlink" href="#moodle-kubernetes-operations-documentation" title="Link to this heading">¶</a></h1>
+<p>This documentation provides step-by-step instructions on how to apply, update, and scale the Kubernetes manifests for the Moodle application using <cite>kubectl</cite>.</p>
+<section id="applying-manifests">
+<h2>Applying Manifests<a class="headerlink" href="#applying-manifests" title="Link to this heading">¶</a></h2>
+<p><strong>Applying Services, Deployments, and Ingress</strong></p>
+<ol class="arabic">
+<li><p>Open a terminal.</p></li>
+<li><p>Navigate to the directory containing the YAML manifests.</p></li>
+<li><p>Run the following command to apply the Service, Deployment, and Ingress:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">&lt;/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">moodlemanifest</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Replace <cite>&lt;/path/to/moodlemanifest/&gt;</cite> with the actual filename if it differs.</p>
+</li>
+<li><p>Verify that the resources are created successfully:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">services</span><span class="p">,</span><span class="n">deployments</span><span class="p">,</span><span class="n">ingress</span><span class="p">,</span><span class="n">pods</span> <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">namespace</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
 </section>
-<section id="databases">
-<h3>Databases<a class="headerlink" href="#databases" title="Link to this heading">¶</a></h3>
+<section id="updating-manifests">
+<h2>Updating Manifests<a class="headerlink" href="#updating-manifests" title="Link to this heading">¶</a></h2>
+<p><strong>Updating Deployment</strong></p>
+<ol class="arabic">
+<li><p>Make necessary changes to the <cite>Deployment</cite> manifest (<cite>&lt;/path/to/moodlemanifest/&gt;</cite>).</p></li>
+<li><p>Run the following command to apply the changes:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">apply</span> <span class="o">-</span><span class="n">f</span> <span class="o">&lt;/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">moodlemanifest</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This command updates the existing deployment with the new configuration.</p>
+</li>
+<li><p>Verify the update by checking the status of the deployment:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">deployments</span> <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">namespace</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
 </section>
+<section id="scaling-deployments">
+<h2>Scaling Deployments<a class="headerlink" href="#scaling-deployments" title="Link to this heading">¶</a></h2>
+<p><strong>Scaling the Number of Replicas</strong></p>
+<ol class="arabic">
+<li><p>To scale the number of replicas in the <cite>Deployment</cite>, run the following command:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">scale</span> <span class="n">deployment</span> <span class="n">moodle</span> <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">namespace</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">replicas</span><span class="o">=</span><span class="mi">3</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Replace <cite>3</cite> with the desired number of replicas.</p>
+</li>
+<li><p>Verify the scaling operation:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">deployments</span> <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">namespace</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Ensure that the <cite>AVAILABLE</cite> count reflects the desired number of replicas.</p>
+</li>
+</ol>
+</section>
+<section id="deleting-resources">
+<h2>Deleting Resources<a class="headerlink" href="#deleting-resources" title="Link to this heading">¶</a></h2>
+<p><strong>Deleting Services, Deployments, Ingress, and PersistentVolumeClaims</strong></p>
+<ol class="arabic">
+<li><p>To delete the resources, run the following command:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">delete</span> <span class="o">-</span><span class="n">f</span> <span class="o">&lt;/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">moodlemanifest</span><span class="o">/&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This command deletes all resources defined in the manifests.</p>
+</li>
+<li><p>Verify that the resources are deleted:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kubectl</span> <span class="n">get</span> <span class="n">services</span><span class="p">,</span><span class="n">deployments</span><span class="p">,</span><span class="n">ingress</span><span class="p">,</span><span class="n">persistentvolumeclaims</span><span class="p">,</span><span class="n">pods</span> <span class="o">-</span><span class="n">n</span> <span class="o">&lt;</span><span class="n">namespace</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Ensure that no resources are listed.</p>
+</li>
+</ol>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">¶</a></h2>
+<p>This documentation provides essential operations for managing the Kubernetes manifests for the Moodle application. Ensure to follow these steps carefully, and adapt them to your specific deployment requirements. If you encounter issues or have further questions, please reach out to the support team.</p>
 </section>
 </section>
 
@@ -80,7 +308,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">tekouin</a></h1>
+<h1 class="logo"><a href="../../index.html">Tekouin Platform</a></h1>
 
 
 
@@ -92,11 +320,40 @@
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tekouin Moodle Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#set-up-your-server">Set up your server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#download-and-copy-files-into-place">Download and copy files into place</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-an-empty-database">Create an empty database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-the-moodledata-data-directory">Create the (moodledata) data directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#start-moodle-install">Start Moodle install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#final-configuration">Final configuration</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#moodle-kubernetes-operations-documentation">Moodle Kubernetes Operations Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#applying-manifests">Applying Manifests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-manifests">Updating Manifests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scaling-deployments">Scaling Deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deleting-resources">Deleting Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Administrating.html">Moodle Administrator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Integrations.html">Moodle Integrations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Moodle_Devops.html">Devops For Moodle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teachers.html">Moodle For Teachers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Branding.html">Branding Moodle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Teacher/Teacher.html">Teacher Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Teacher/Teacher.html#teacher-dashboard-devops-guide">Teacher Dashboard Devops Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Teacher/Teacher.html#teacher-dashboard-administrator-guide">Teacher Dashboard Administrator Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Teacher/Teacher.html#teacher-dashboard-developer-guide">Teacher Dashboard Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jupyter/Jupyter.html">JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jupyter/Jupyter.html#jupyterhub-devops-guide">JupyterHub  Devops Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jupyter/Jupyter.html#jupyterhub-administrator-guide">JupyterHub  Administrator Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jupyter/Jupyter.html#jupyterhub-customization-guide">JupyterHub  Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BBB/BBB.html">Big Blue Button</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AWS/AWS.html">AWS Services Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Checker/Checker.html">Checker System Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../VPL/VPL.html">Virtual Programming Lab Documentation</a></li>
 </ul>
 
 <div class="relations">
@@ -104,7 +361,7 @@
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="../../index.html" title="previous chapter">Welcome to Tekouin Platform Documentation!</a></li>
-      <li>Next: <a href="Adminestating.html" title="next chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="Administrating.html" title="next chapter">Moodle Administrator</a></li>
   </ul></li>
 </ul>
 </div>
@@ -131,7 +388,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2023, ahmed belhaj.
+      &copy;2023, Ahmed Belhaj.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>

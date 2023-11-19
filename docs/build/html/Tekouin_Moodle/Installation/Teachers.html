@@ -5,16 +5,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Moodle For Teachers &#8212; tekouin 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=4f649999" />
+    <title>Moodle For Teachers &#8212; Tekouin Platform 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
     <script src="../../_static/documentation_options.js?v=f2a433a1"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Branding Moodle" href="Branding.html" />
-    <link rel="prev" title="Moodle Integrations" href="Integrations.html" />
+    <link rel="prev" title="Devops For Moodle" href="Moodle_Devops.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -33,7 +34,177 @@
             
   <section id="moodle-for-teachers">
 <h1>Moodle For Teachers<a class="headerlink" href="#moodle-for-teachers" title="Link to this heading">¶</a></h1>
-<p>This guide will walk you through the steps to install Big Blue Button.</p>
+<section id="setting-up-a-new-course">
+<h2>Setting Up a New Course<a class="headerlink" href="#setting-up-a-new-course" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Access the Administration Dashboard:</strong>
+- Log in to the administration dashboard of the learning management system.</p></li>
+<li><p><strong>Navigate to Courses:</strong>
+- Find the “Courses” section in the dashboard.</p></li>
+<li><p><strong>Create a New Course:</strong>
+- Click on the “Create New Course” button.
+- Fill in the required details, such as course name, description, and enrollment options.
+- Save the course settings.</p></li>
+<li><p><strong>Configure Course Settings:</strong>
+- Set up additional course settings, including grading options, access restrictions, and visibility.</p></li>
+<li><p><strong>Add Course Content:</strong>
+- Upload course materials, lectures, and any additional resources.</p></li>
+</ol>
+</section>
+<section id="enrolling-users">
+<h2>Enrolling Users<a class="headerlink" href="#enrolling-users" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Access the User Management Section:</strong>
+- Navigate to the user management section in the administration dashboard.</p></li>
+<li><p><strong>Add New Users:</strong>
+- Click on the “Add New Users” or “Enroll Users” button.
+- Enter the usernames or email addresses of the users you want to enroll in the course.</p></li>
+<li><p><strong>Specify User Roles:</strong>
+- Assign appropriate roles to the enrolled users (e.g., student, teacher, administrator).</p></li>
+<li><p><strong>Send Enrollment Invitations:</strong>
+- Optionally, send enrollment invitations to users via email.</p></li>
+</ol>
+</section>
+<section id="adding-activities-to-the-course">
+<h2>Adding Activities to the Course<a class="headerlink" href="#adding-activities-to-the-course" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Navigate to Course Content:</strong>
+- Go to the course page in the administration dashboard.</p></li>
+<li><p><strong>Add Activities:</strong>
+- Click on the “Add Activity” button.
+- Choose the type of activity you want to add (e.g., assignment, quiz, discussion forum).</p></li>
+<li><p><strong>Configure Activity Settings:</strong>
+- Set up activity-specific settings, such as due dates, grading criteria, and access permissions.</p></li>
+<li><p><strong>Publish Activities:</strong>
+- Ensure that the activities are published and accessible to enrolled users.</p></li>
+</ol>
+</section>
+<section id="accessing-grading-interface">
+<h2>Accessing Grading Interface<a class="headerlink" href="#accessing-grading-interface" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Log in to the Learning Management System:</strong>
+- Access the system using your administrator or instructor credentials.</p></li>
+<li><p><strong>Navigate to the Grading Section:</strong>
+- Find the “Grading” or “Assessment” section in the administration or instructor dashboard.</p></li>
+<li><p><strong>Select the Course and Assignment:</strong>
+- Choose the specific course for which you want to perform grading.
+- Select the assignment you wish to grade.</p></li>
+</ol>
+</section>
+<section id="grading-assignments">
+<h2>Grading Assignments<a class="headerlink" href="#grading-assignments" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>View Submission Details:</strong>
+- Click on a student’s submission to access the details of their assignment.</p></li>
+<li><p><strong>Assess Content:</strong>
+- Review the submitted content based on the assignment instructions.
+- Evaluate the quality, correctness, and completeness of the work.</p></li>
+<li><p><strong>Provide Feedback:</strong>
+- Offer constructive feedback to guide the student’s understanding and improvement.
+- Use comments or annotations directly on the submission if available.</p></li>
+<li><p><strong>Assign a Grade:</strong>
+- Assign a numerical or letter grade based on the evaluation criteria.
+- Follow the grading rubric or guidelines established for the assignment.</p></li>
+<li><p><strong>Submit Grades:</strong>
+- Save or submit the assigned grades for each student.
+- Confirm the submission to ensure the grades are recorded.</p></li>
+</ol>
+</section>
+<section id="bulk-user-addition">
+<h2>Bulk User Addition<a class="headerlink" href="#bulk-user-addition" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Access the User Management Section:</strong>
+- Log in to the administration dashboard of the learning management system.</p></li>
+<li><p><strong>Navigate to Bulk User Operations:</strong>
+- Find the “Bulk User Operations” or a similar section.</p></li>
+<li><p><strong>Prepare User Data File:</strong>
+- Create a CSV or Excel file containing user details, including usernames, email addresses, and roles.
+- Ensure the file follows the required format.</p></li>
+<li><p><strong>Upload User Data File:</strong>
+- Use the provided interface to upload the prepared user data file.</p></li>
+<li><p><strong>Review and Confirm:</strong>
+- Review the uploaded user data for accuracy.
+- Confirm the bulk user addition operation.</p></li>
+<li><p><strong>Notify Users:</strong>
+- Optionally, notify the newly added users about their accounts and provide login credentials.</p></li>
+</ol>
+</section>
+<section id="accessing-quiz-creation-interface">
+<h2>Accessing Quiz Creation Interface<a class="headerlink" href="#accessing-quiz-creation-interface" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Log in to the Learning Management System:</strong>
+- Access the system using your administrator or instructor credentials.</p></li>
+<li><p><strong>Navigate to the Quiz Management Section:</strong>
+- Find the “Quizzes” or “Assessment” section in the administration or instructor dashboard.</p></li>
+<li><p><strong>Select the Course:</strong>
+- Choose the specific course for which you want to create a quiz.</p></li>
+</ol>
+</section>
+<section id="creating-a-new-quiz">
+<h2>Creating a New Quiz<a class="headerlink" href="#creating-a-new-quiz" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Initiate Quiz Creation:</strong>
+- Click on the “Create Quiz” or “New Quiz” button.</p></li>
+<li><p><strong>Define Quiz Details:</strong>
+- Enter the basic details of the quiz, including the title, description, and time limit.</p></li>
+<li><p><strong>Configure Quiz Settings:</strong>
+- Set up quiz settings, such as availability dates, number of attempts, and scoring options.</p></li>
+<li><p><strong>Add Quiz Questions:</strong>
+- Click on the “Add Question” or similar button to start adding questions to the quiz.
+- Choose the question type (e.g., multiple-choice, true/false, short answer).</p></li>
+<li><p><strong>Customize Question Parameters:</strong>
+- For each question, provide the question text, answer options, correct answers, and any additional parameters.</p></li>
+<li><p><strong>Preview the Quiz:</strong>
+- Before finalizing, preview the quiz to ensure questions are displayed correctly.</p></li>
+<li><p><strong>Save or Publish the Quiz:</strong>
+- Save the quiz as a draft if further edits are needed.
+- Publish the quiz when ready for student access.</p></li>
+</ol>
+</section>
+<section id="quiz-management">
+<h2>Quiz Management<a class="headerlink" href="#quiz-management" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Accessing Quiz Reports:</strong>
+- After students have taken the quiz, access the quiz reports to view individual and overall performance.</p></li>
+<li><p><strong>Reviewing and Grading Responses:</strong>
+- View individual student responses and assign grades as necessary.</p></li>
+<li><p><strong>Modifying Quiz Settings:</strong>
+- If needed, modify quiz settings such as availability or time limit.</p></li>
+</ol>
+</section>
+<section id="course-backup-and-restore">
+<h2>Course Backup and Restore<a class="headerlink" href="#course-backup-and-restore" title="Link to this heading">¶</a></h2>
+<p><strong>Backup</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Access Course Management:</strong>
+- Navigate to the course management section in the administration dashboard.</p></li>
+<li><p><strong>Select Courses for Backup:</strong>
+- Choose the courses you want to back up.</p></li>
+<li><p><strong>Initiate Backup:</strong>
+- Click on the “Backup” or “Export” button.
+- Select backup options, including content and settings.</p></li>
+<li><p><strong>Download Backup Files:</strong>
+- Once the backup process is complete, download the backup files to your local system.</p></li>
+</ol>
+<p><strong>Restore</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Access Course Management:</strong>
+- Navigate to the course management section in the administration dashboard.</p></li>
+<li><p><strong>Initiate Restore:</strong>
+- Click on the “Restore” or “Import” button.
+- Upload the previously downloaded backup files.</p></li>
+<li><p><strong>Configure Restore Options:</strong>
+- Set restore options, such as overwriting existing content or creating a new course.</p></li>
+<li><p><strong>Initiate Restore Process:</strong>
+- Confirm the restore operation to initiate the process.</p></li>
+<li><p><strong>Verify Restored Courses:</strong>
+- After completion, verify that the courses are successfully restored with the intended content and settings.</p></li>
+</ol>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">¶</a></h2>
+<p>This documentation covers the essential steps for setting up a new course, enrolling users, and adding activities in our learning management system. For additional details or troubleshooting, refer to the system’s official documentation or contact the support team.</p>
+</section>
 </section>
 
 
@@ -43,7 +214,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">tekouin</a></h1>
+<h1 class="logo"><a href="../../index.html">Tekouin Platform</a></h1>
 
 
 
@@ -55,17 +226,44 @@
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Tekouin Moodle Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html#moodle-kubernetes-operations-documentation">Moodle Kubernetes Operations Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Administrating.html">Moodle Administrator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Integrations.html">Moodle Integrations</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Moodle For Teachers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Moodle_Devops.html">Devops For Moodle</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Moodle For Teachers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-new-course">Setting Up a New Course</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enrolling-users">Enrolling Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-activities-to-the-course">Adding Activities to the Course</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-grading-interface">Accessing Grading Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grading-assignments">Grading Assignments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bulk-user-addition">Bulk User Addition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-quiz-creation-interface">Accessing Quiz Creation Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-new-quiz">Creating a New Quiz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quiz-management">Quiz Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#course-backup-and-restore">Course Backup and Restore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Branding.html">Branding Moodle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Teacher/Teacher.html">Teacher Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Teacher/Teacher.html#teacher-dashboard-devops-guide">Teacher Dashboard Devops Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Teacher/Teacher.html#teacher-dashboard-administrator-guide">Teacher Dashboard Administrator Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Teacher/Teacher.html#teacher-dashboard-developer-guide">Teacher Dashboard Developer Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jupyter/Jupyter.html">JupyterHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jupyter/Jupyter.html#jupyterhub-devops-guide">JupyterHub  Devops Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jupyter/Jupyter.html#jupyterhub-administrator-guide">JupyterHub  Administrator Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jupyter/Jupyter.html#jupyterhub-customization-guide">JupyterHub  Customization Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../BBB/BBB.html">Big Blue Button</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AWS/AWS.html">AWS Services Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Checker/Checker.html">Checker System Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../VPL/VPL.html">Virtual Programming Lab Documentation</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="Integrations.html" title="previous chapter">Moodle Integrations</a></li>
+      <li>Previous: <a href="Moodle_Devops.html" title="previous chapter">Devops For Moodle</a></li>
       <li>Next: <a href="Branding.html" title="next chapter">Branding Moodle</a></li>
   </ul></li>
 </ul>
@@ -93,7 +291,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2023, ahmed belhaj.
+      &copy;2023, Ahmed Belhaj.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>

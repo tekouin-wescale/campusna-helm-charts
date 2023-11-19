@@ -5,9 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to Tekouin Platform Documentation! &#8212; tekouin 1.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <title>Welcome to Tekouin Platform Documentation! &#8212; Tekouin Platform 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
     <script src="_static/documentation_options.js?v=f2a433a1"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -50,9 +51,21 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html">Tekouin Moodle Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#prerequisites">Prerequisites</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#set-up-your-server">Set up your server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#download-and-copy-files-into-place">Download and copy files into place</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#create-an-empty-database">Create an empty database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#create-the-moodledata-data-directory">Create the (moodledata) data directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#start-moodle-install">Start Moodle install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#final-configuration">Final configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#moodle-kubernetes-operations-documentation">Moodle Kubernetes Operations Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#applying-manifests">Applying Manifests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#updating-manifests">Updating Manifests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#scaling-deployments">Scaling Deployments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#deleting-resources">Deleting Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#conclusion">Conclusion</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Administrating.html">Moodle Administrator</a><ul>
@@ -63,8 +76,34 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Integrations.html">Moodle Integrations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Moodle_Devops.html">Devops For Moodle</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html">Moodle For Teachers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html">Branding Moodle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html">Moodle For Teachers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#setting-up-a-new-course">Setting Up a New Course</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#enrolling-users">Enrolling Users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#adding-activities-to-the-course">Adding Activities to the Course</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#accessing-grading-interface">Accessing Grading Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#grading-assignments">Grading Assignments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#bulk-user-addition">Bulk User Addition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#accessing-quiz-creation-interface">Accessing Quiz Creation Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#creating-a-new-quiz">Creating a New Quiz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#quiz-management">Quiz Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#course-backup-and-restore">Course Backup and Restore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Teachers.html#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html">Branding Moodle</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#accessing-theme-management">Accessing Theme Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#changing-the-default-theme">Changing the Default Theme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#customizing-theme-settings">Customizing Theme Settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#creating-and-applying-custom-themes">Creating and Applying Custom Themes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#restoring-default-theme">Restoring Default Theme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#accessing-customization-options">Accessing Customization Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#customizing-the-home-page">Customizing the Home Page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#customizing-the-login-page">Customizing the Login Page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#customizing-the-dashboard-page">Customizing the Dashboard Page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#conclusion">Conclusion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tekouin_Moodle/Installation/Branding.html#indices-and-tables">Indices and Tables</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Teacher/Teacher.html">Teacher Dashboard</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Teacher/Teacher.html#prerequisites">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Teacher/Teacher.html#installation">Installation</a></li>
@@ -142,7 +181,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">tekouin</a></h1>
+<h1 class="logo"><a href="#">Tekouin Platform</a></h1>
 
 
 
@@ -154,6 +193,7 @@
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html">Tekouin Moodle Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/introduction.html#moodle-kubernetes-operations-documentation">Moodle Kubernetes Operations Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Administrating.html">Moodle Administrator</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Integrations.html">Moodle Integrations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tekouin_Moodle/Installation/Moodle_Devops.html">Devops For Moodle</a></li>
@@ -204,7 +244,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2023, ahmed belhaj.
+      &copy;2023, Ahmed Belhaj.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
