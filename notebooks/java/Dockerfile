@@ -55,12 +55,7 @@ RUN unzip ijava-kernel.zip -d ijava-kernel \
     && cd ijava-kernel \
     && python3 install.py --sys-prefix
 
-# Install jupyter RISE extension.
-RUN pip install jupyter_contrib-nbextensions RISE \
-    && jupyter-nbextension install rise --py --system \
-    && jupyter-nbextension enable rise --py --system \
-    && jupyter contrib nbextension install --system \
-    && jupyter nbextension enable hide_input/main
+
 
 # Cleanup
 RUN rm ijava-kernel.zip
