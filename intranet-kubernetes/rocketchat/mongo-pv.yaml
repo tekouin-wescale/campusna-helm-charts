@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rocketchat-mongodb-volume
+  labels:
+    app: rocketchat
+  namespace: intranet-campusna
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/rocketchat/mongodb/data"

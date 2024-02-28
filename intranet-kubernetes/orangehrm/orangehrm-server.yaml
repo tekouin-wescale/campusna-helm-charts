@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orangehrm
+  namespace: intranet-campusna
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orangehrm
+  template:
+    metadata:
+      labels:
+        app: orangehrm
+    spec:
+      containers:
+        - name: orangehrm
+          image: orangehrm/orangehrm:5.4
+          envFrom:
+          - configMapRef:
+              name: configmap-orangehrm
+          env:
+            - name: ORANGEHRM_DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: orangehrm-secret
+                  key: ORANGEHRM_DATABASE_HOST
+
+            - name: ORANGEHRM_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_ROOT_PASSWORD
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: orangehrm-persistent-storage
+              mountPath: /orangehrm
+      volumes:
+        - name: orangehrm-persistent-storage
+          emptyDir: {}

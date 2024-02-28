@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rocketchat-server
+  namespace: intranet-campusna
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rocketchat-server
+  template:
+    metadata:
+      labels:
+        app: rocketchat-server
+    spec:
+      containers:
+      - name: rocketchat
+        image: registry.rocket.chat/rocketchat/rocket.chat:6.6.1
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: rocketchat-config
+
