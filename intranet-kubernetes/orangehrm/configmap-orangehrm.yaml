@@ -4,4 +4,4 @@ metadata:
   name: orangehrm-secret
 type: Opaque
 data:
-  ORANGEHRM_DATABASE_HOST: <base64-encoded-value-of-database-hostname>
+  ORANGEHRM_DATABASE_HOST: tekouin-main-replica.csasqowzzfpj.eu-west-3.rds.amazonaws.com
