@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpl-docker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vpl-docker
+  template:
+    metadata:
+      labels:
+        app: vpl-docker
+    spec:
+      containers:
+      - name: vpl-docker-container
+        image: hthuwal/vpl_docker
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        securityContext:
+          privileged: true
+          runAsUser: 0
+        command: ["bash", "-c"]
+        args: ["service vpl-jail-system start && tail -f /dev/null"]
